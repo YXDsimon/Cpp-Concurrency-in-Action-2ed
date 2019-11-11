@@ -82,7 +82,7 @@
 |future|无|
 |interruption|[pthread_cancel](http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_cancel.html)|
 
-### [Java Thread](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html)
+### [Java Thread](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Thread.html)
 
 |特性|API|
 |:-:|:-:|
