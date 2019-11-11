@@ -86,11 +86,11 @@
 
 |特性|API|
 |:-:|:-:|
-|thread|[java.lang.Thread](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html)|
+|thread|[java.lang.Thread](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Thread.html)|
 |mutex|[synchronized blocks](http://tutorials.jenkov.com/java-concurrency/synchronized.html)|
-|condition variable|[java.lang.Object.wait](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait--)、[java.lang.Object.notify](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#notify--)|
-|atomic|volatile变量、[java.util.concurrent.atomic](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/package-summary.html)|
-|future|[java.util.concurrent.future](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html)|
-|interruption|[java.lang.Thread.interrupt](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#interrupt--)|
-|线程安全的容器|[java.util.concurrent](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-frame.html)中的容器|
-|线程池|[java.lang.Thread.ThreadPoolExecutor](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html)|
+|condition variable|[java.lang.Object.wait](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#wait())、[java.lang.Object.notify](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#notify())|
+|atomic|volatile变量、[java.util.concurrent.atomic](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/concurrent/atomic/package-summary.html)|
+|future|[java.util.concurrent.Future](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/concurrent/Future.html)|
+|interruption|[java.lang.Thread.interrupt](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Thread.html#interrupt())|
+|线程安全的容器|[java.util.concurrent](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/concurrent/package-summary.html)中的容器|
+|线程池|[java.util.concurrent.ThreadPoolExecutor](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html)|
