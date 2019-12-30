@@ -2,7 +2,7 @@ C++11引入了Boost线程库作为标准线程库，作者Anthony Williams为介
 
 ## 相关链接
 * GitHub Pages：[https://downdemo.github.io/Cpp-Concurrency-in-Action-2ed/](https://downdemo.github.io/Cpp-Concurrency-in-Action-2ed/)
-* GitBook在线阅读：[https://downdemo.gitbook.io/Cpp-Concurrency-in-Action-2ed/](https://downdemo.gitbook.io/Cpp-Concurrency-in-Action-2ed/)
+* GitBook在线阅读：[https://downdemo.gitbook.io/cpp-concurrency-in-action-2ed/](https://downdemo.gitbook.io/cpp-concurrency-in-action-2ed/)
 
 ## [C++11线程库API](https://en.cppreference.com/w/cpp/thread)
 
