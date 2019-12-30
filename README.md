@@ -1,8 +1,8 @@
-[《C++ Concurrency in Action 2ed》](https://learning.oreilly.com/library/view/c-concurrency-in/9781617294693/)由C++11线程库作者所作，前五章介绍了[C++11线程库API](https://en.cppreference.com/w/cpp/thread)的基本用法，后六章从实践角度介绍了并发编程的设计思想。相比[第一版](https://book.douban.com/subject/4130141/)，[第二版](https://book.douban.com/subject/27036085/)多介绍了一些C++17特性，如[std::scoped_lock](https://en.cppreference.com/w/cpp/thread/scoped_lock)、[std::shared_mutex](https://en.cppreference.com/w/cpp/thread/shared_mutex)，并多出一章（第十章）介绍[C++17标准库并行算法](https://en.cppreference.com/w/cpp/header/execution)。
+C++11引入了Boost线程库作为标准线程库，作者Anthony Williams为介绍其特性，于2012年出版了[《C++ Concurrency in Action》](https://book.douban.com/subject/4130141/)一书，并顺应C++17于2019年2月出版了[第二版](https://book.douban.com/subject/27036085/)。[《C++ Concurrency in Action 2ed》](https://learning.oreilly.com/library/view/c-concurrency-in/9781617294693/)前五章介绍了[C++11线程库API](https://en.cppreference.com/w/cpp/thread)的基本用法，后六章从实践角度介绍了并发编程的设计思想，相比第一版多介绍了一些C++17特性，如[std::scoped_lock](https://en.cppreference.com/w/cpp/thread/scoped_lock)、[std::shared_mutex](https://en.cppreference.com/w/cpp/thread/shared_mutex)，并多出一章（第十章）介绍[C++17标准库并行算法](https://en.cppreference.com/w/cpp/header/execution)。本书适合C++多线程初学者，此为个人笔记，仅供参考，更详细内容见[原书](https://learning.oreilly.com/library/view/c-concurrency-in/9781617294693/)。
 
-## GitHub Pages
-
-* [https://downdemo.github.io/Cpp-Concurrency-in-Action-2ed/](https://downdemo.github.io/Cpp-Concurrency-in-Action-2ed/)
+## 相关链接
+* GitHub Pages：[https://downdemo.github.io/Cpp-Concurrency-in-Action-2ed/](https://downdemo.github.io/Cpp-Concurrency-in-Action-2ed/)
+* GitBook在线阅读：[https://downdemo.gitbook.io/Cpp-Concurrency-in-Action-2ed/](https://downdemo.gitbook.io/Cpp-Concurrency-in-Action-2ed/)
 
 ## [C++11线程库API](https://en.cppreference.com/w/cpp/thread)
 
