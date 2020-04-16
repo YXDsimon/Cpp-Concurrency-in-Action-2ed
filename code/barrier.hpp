@@ -9,20 +9,20 @@ struct barrier {
     void wait()
     {
         const unsigned gen = generation.load();
-        if(!--spaces) // 递减
+        if (!--spaces) // 递减
         {
             spaces = count.load(); // 递减后为0则重置spaces为count
             ++generation;
         }
         else
         {
-            while(generation.load() == gen) std::this_thread::yield();
+            while (generation.load() == gen) std::this_thread::yield();
         }
     }
     void done_waiting() // 供最后一个线程调用
     {
         --count;
-        if(!--spaces)
+        if (!--spaces)
         {
             spaces = count.load();
             ++generation;

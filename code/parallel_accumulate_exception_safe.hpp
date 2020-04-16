@@ -19,7 +19,7 @@ template<typename Iterator, typename T>
 T parallel_accumulate(Iterator first, Iterator last, T init)
 {
     const unsigned long len = std::distance(first, last);
-    if(!len) return init;
+    if (!len) return init;
     const unsigned long min_per_thread = 25;
     const unsigned long max_threads = (len + min_per_thread - 1) / min_per_thread;
     const unsigned long hardware_threads = std::thread::hardware_concurrency();
@@ -29,7 +29,7 @@ T parallel_accumulate(Iterator first, Iterator last, T init)
     std::vector<std::future<T>> fts(num_threads - 1);
     std::vector<std::thread> threads(num_threads - 1);
     Iterator block_start = first;
-    for(unsigned long i = 0; i < num_threads - 1; ++i)
+    for (unsigned long i = 0; i < num_threads - 1; ++i)
     {
         Iterator block_end = block_start;
         std::advance(block_end, block_size);
@@ -43,14 +43,14 @@ T parallel_accumulate(Iterator first, Iterator last, T init)
     T res = init;
     try
     {
-        for(unsigned long i = 0; i < num_threads - 1; ++i) res += fts[i].get();
+        for (unsigned long i = 0; i < num_threads - 1; ++i) res += fts[i].get();
         res += last_res;
     }
     catch(...)
     {
-        for(unsigned long i = 0; i < num_threads - 1; ++i)
+        for (unsigned long i = 0; i < num_threads - 1; ++i)
         {
-            if(threads[i].joinable()) threads[i].join();
+            if (threads[i].joinable()) threads[i].join();
         }
         throw;
     }

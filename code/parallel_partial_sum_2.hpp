@@ -14,7 +14,7 @@ void parallel_partial_sum(Iterator first, Iterator last)
         {
             value_type& ith_element = *(first + i);
             bool update_source = false;
-            for(unsigned step = 0, stride = 1; stride <= i; ++step, stride *= 2)
+            for (unsigned step = 0, stride = 1; stride <= i; ++step, stride *= 2)
             {
                 const value_type& source = step % 2 ? v[i] : ith_element;
                 value_type& dest = step % 2 ? ith_element : v[i];
@@ -23,18 +23,18 @@ void parallel_partial_sum(Iterator first, Iterator last)
                 update_source = !(step % 2);
                 b.wait();
             }
-            if(update_source) ith_element = v[i];
+            if (update_source) ith_element = v[i];
             b.done_waiting();
         }
     };
     const unsigned long len = std::distance(first, last);
-    if(len <= 1) return;
+    if (len <= 1) return;
     std::vector<value_type> v(len);
     barrier b(len);
     std::vector<std::thread> threads(len - 1);
     threads_guard g(threads);
     Iterator block_start = first;
-    for(unsigned long i = 0; i < len - 1; ++i)
+    for (unsigned long i = 0; i < len - 1; ++i)
     {
         threads[i] = std::thread(process_element{}, first, last, std::ref(v), i, std::ref(b));
     }

@@ -30,7 +30,7 @@ public:
     {
         node* cur = &head;
         std::unique_lock<std::mutex> l(head.m);
-        while(node* const next = cur->next.get())
+        while (node* const next = cur->next.get())
         {
             std::unique_lock<std::mutex> nextLock(next->m);
             l.unlock(); // 锁住了下一节点，因此可以释放上一节点的锁
@@ -45,11 +45,11 @@ public:
     {
         node* cur = &head;
         std::unique_lock<std::mutex> l(head.m);
-        while(node* const next = cur->next.get())
+        while (node* const next = cur->next.get())
         {
             std::unique_lock<std::mutex> nextLock(next->m);
             l.unlock();
-            if(f(*next->data)) return next->data; // f返回true时则返回目标值，无需继续查找
+            if (f(*next->data)) return next->data; // f返回true时则返回目标值，无需继续查找
             cur = next;
             l = std::move(nextLock);
         }
@@ -61,17 +61,17 @@ public:
     {
         node* cur = &head;
         std::unique_lock<std::mutex> l(head.m);
-        while(node* const next = cur->next.get())
+        while (node* const next = cur->next.get())
         {
             std::unique_lock<std::mutex> nextLock(next->m);
-            if(f(*next->data)) // f为true时则移除下一节点
-            {
+            if (f(*next->data))
+            { // f为true时则移除下一节点
                 std::unique_ptr<node> oldNext = std::move(cur->next);
                 cur->next = std::move(next->next); // 下一节点设为下下节点
                 nextLock.unlock();
             }
-            else // 否则继续转至下一节点
-            {
+            else
+            { // 否则继续转至下一节点
                 l.unlock();
                 cur = next;
                 l = std::move(nextLock);

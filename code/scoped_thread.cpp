@@ -8,7 +8,7 @@ class scoped_thread {
 public:
     explicit scoped_thread(std::thread x) : t(std::move(x))
     {
-        if(!t.joinable()) throw std::logic_error("no thread");
+        if (!t.joinable()) throw std::logic_error("no thread");
     }
     ~scoped_thread() { t.join(); }
     scoped_thread(const scoped_thread&) = delete;

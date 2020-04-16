@@ -59,21 +59,24 @@ namespace messaging
         friend class TemplateDispatcher; // TemplateDispatcher实例互为友元
         void wait_and_dispatch()
         {
-            for(;;)
+            for (;;)
             {
                 auto msg = q->wait_and_pop();
-                if(dispatch(msg)) break; // 消息被处理后则退出循环
+                if (dispatch(msg)) break; // 消息被处理后则退出循环
             }
         }
 
         bool dispatch(const std::shared_ptr<message_base>& msg)
         {
-            if(wrapped_message<Msg>* wrapper = dynamic_cast<wrapped_message<Msg>*>(msg.get()))
+            if (wrapped_message<Msg>* wrapper = dynamic_cast<wrapped_message<Msg>*>(msg.get()))
             { // message_base没有任何成员，要先转为派生类wrapped_message才能访问contents
                 f(wrapper->contents);
                 return true;
             }
-            else return prev->dispatch(msg); // 如果消息类型不匹配，则链接到前一个dispatcher
+            else
+            { // 如果消息类型不匹配，则链接到前一个dispatcher
+                return prev->dispatch(msg);
+            }
         }
     public:
         TemplateDispatcher(const TemplateDispatcher&) = delete;
@@ -99,7 +102,7 @@ namespace messaging
 
         ~TemplateDispatcher() noexcept(false) // 所有调度器都可能抛出异常
         {
-            if(!chained) wait_and_dispatch(); // 析构函数中完成任务调度
+            if (!chained) wait_and_dispatch(); // 析构函数中完成任务调度
         }
     };
 }
@@ -116,7 +119,7 @@ namespace messaging
         friend class TemplateDispatcher; // 允许TemplateDispatcher访问内部成员
         void wait_and_dispatch()
         {
-            for(;;)
+            for (;;)
             {
                 auto msg = q->wait_and_pop();
                 dispatch(msg);
@@ -124,7 +127,7 @@ namespace messaging
         }
         bool dispatch(const std::shared_ptr<message_base>& msg)
         { // 检查消息是否为close_queue，如果是则抛出异常，否则返回false表示消息未被处理
-            if(dynamic_cast<wrapped_message<close_queue>*>(msg.get()))
+            if (dynamic_cast<wrapped_message<close_queue>*>(msg.get()))
             {
                 throw close_queue();
             }
@@ -145,7 +148,7 @@ namespace messaging
         }
         ~dispatcher() noexcept(false) // bool dispatch()可能抛出close_queue异常
         { // 从receiver::wait返回的dispatcher实例会马上被析构
-            if(!chained) wait_and_dispatch(); // 析构函数中完成任务调度
+            if (!chained) wait_and_dispatch(); // 析构函数中完成任务调度
         }
     };
 }
@@ -162,7 +165,7 @@ namespace messaging
         template<typename Message>
         void send(const Message& msg)
         {
-            if(q)  q->push(msg);
+            if (q)  q->push(msg);
         }
     };
 }
@@ -382,7 +385,7 @@ class atm
         {
             unsigned const pin_length = 4;
             pin += msg.digit;
-            if(pin.length() == pin_length)
+            if (pin.length() == pin_length)
             {
                 bank.send(verify_pin(account, pin, incoming));
                 state = &atm::verifying_pin;
@@ -390,7 +393,7 @@ class atm
         })
         .handle<clear_last_pressed>([&](const clear_last_pressed& msg)
         {
-            if(!pin.empty()) pin.pop_back();
+            if (!pin.empty()) pin.pop_back();
         })
         .handle<cancel_pressed>([&](const cancel_pressed& msg)
         {
@@ -430,7 +433,7 @@ public:
         state = &atm::waiting_for_card;
         try
         {
-            for(;;) (this->*state)();
+            for (;;) (this->*state)();
         }
         catch (const messaging::close_queue&) {}
     }
@@ -455,22 +458,31 @@ public:
     {
         try
         {
-            for(;;)
+            for (;;)
             {
                 incoming.wait()
                 .handle<verify_pin>([&](const verify_pin& msg)
                 {
-                    if(msg.pin == "6666") msg.atm_queue.send(pin_verified()); // 输入密码为6666则通过验证
-                    else msg.atm_queue.send(pin_incorrect()); // 否则发送密码错误的消息
+                    if (msg.pin == "6666")
+                    { // 输入密码为6666则通过验证
+                        msg.atm_queue.send(pin_verified());
+                    }
+                    else
+                    { // 否则发送密码错误的消息
+                        msg.atm_queue.send(pin_incorrect());
+                    }
                 })
                 .handle<withdraw>([&](const withdraw& msg) // 取钱
                 {
-                    if(balance >= msg.amount)
+                    if (balance >= msg.amount)
                     {
                         msg.atm_queue.send(withdraw_ok());
                         balance -= msg.amount;
                     }
-                    else msg.atm_queue.send(withdraw_denied());
+                    else
+                    {
+                        msg.atm_queue.send(withdraw_denied());
+                    }
                 })
                 .handle<get_balance>([&](const get_balance& msg)
                 {
@@ -502,7 +514,7 @@ public:
     {
         try
         {
-            for(;;)
+            for (;;)
             {
                 incoming.wait()
                 .handle<issue_money>([&](const issue_money& msg)
@@ -590,7 +602,7 @@ int main()
     std::thread atm_thread(&atm::run, &machine);
     messaging::sender atmqueue(machine.get_sender());
     bool quit_pressed = false;
-    while(!quit_pressed)
+    while (!quit_pressed)
     {
         char c = getchar();
         switch (c)

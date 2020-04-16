@@ -20,25 +20,34 @@ void parallel_partial_sum(Iterator first, Iterator last)
                 Iterator end = last;
                 ++end;
                 std::partial_sum(begin, end, begin);
-                if(previous_end_value) // 不是第一个块
+                if (previous_end_value) // 不是第一个块
                 {
                     value_type addend = previous_end_value->get();
                     *last += addend;
-                    if(end_value) end_value->set_value(*last);
+                    if (end_value) end_value->set_value(*last);
                     std::for_each(begin, last, [addend](value_type& item) { item += addend; });
                 }
-                else if(end_value) end_value->set_value(*last); // 是第一个块则可以为下个块更新尾元素
+                else if (end_value)
+                { // 是第一个块则可以为下个块更新尾元素
+                    end_value->set_value(*last);
+                }
             }
             catch(...)
             {
                 // 如果抛出异常则存储到std::promise，异常会传播给下一个块（获取这个块的尾元素时）
-                if(end_value) end_value->set_exception(std::current_exception());
-                else throw; // 异常最终传给最后一个块，此时再抛出异常
+                if (end_value)
+                {
+                    end_value->set_exception(std::current_exception());
+                }
+                else
+                {
+                    throw; // 异常最终传给最后一个块，此时再抛出异常
+                }
             }
         }
     };
     const unsigned long len = std::distance(first, last);
-    if(!len) return;
+    if (!len) return;
     const unsigned long min_per_thread = 25;
     const unsigned long max_threads = (len + min_per_thread - 1) / min_per_thread;
     const unsigned long hardware_threads = std::thread::hardware_concurrency();
@@ -51,7 +60,7 @@ void parallel_partial_sum(Iterator first, Iterator last)
     previous_end_values.reserve(num_threads - 1);
     threads_guard g(threads);
     Iterator block_start = first;
-    for(unsigned long i = 0; i < num_threads - 1; ++i)
+    for (unsigned long i = 0; i < num_threads - 1; ++i)
     {
         Iterator block_last = block_start;
         std::advance(block_last, block_size - 1); // 指向尾元素

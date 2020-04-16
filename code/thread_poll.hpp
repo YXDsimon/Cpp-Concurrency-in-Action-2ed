@@ -13,15 +13,15 @@ class thread_pool {
 public:
     explicit thread_pool(unsigned n)
     {
-        for(unsigned i = 0; i < n; ++i)
+        for (unsigned i = 0; i < n; ++i)
         {
             std::thread{
                 [this]
                 {
                     std::unique_lock l(m);
-                    for(;;)
+                    for (;;)
                     {
-                        if(!q.empty())
+                        if (!q.empty())
                         {
                             auto task = std::move(q.front());
                             q.pop();
@@ -29,8 +29,14 @@ public:
                             task();
                             l.lock();
                         }
-                        else if(done) break;
-                        else cv.wait(l);
+                        else if (done)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            cv.wait(l);
+                        }
                     }
                 }
             }.detach();

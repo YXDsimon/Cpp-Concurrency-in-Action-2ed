@@ -17,21 +17,21 @@ public:
     
     joining_thread& operator=(joining_thread&& rhs) noexcept
     {
-        if(joinable()) join();
+        if (joinable()) join();
         t = std::move(rhs.t);
         return *this;
     }
     
     joining_thread& operator=(std::thread rhs) noexcept
     {
-        if(joinable()) join();
+        if (joinable()) join();
         t = std::move(rhs);
         return *this;
     }
     
     ~joining_thread() noexcept
     {
-        if(joinable()) join();
+        if (joinable()) join();
     }
     
     void swap(joining_thread&& rhs) noexcept { t.swap(rhs.t); }

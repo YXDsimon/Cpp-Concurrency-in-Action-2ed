@@ -5,7 +5,7 @@
 template<typename T>
 std::list<T> quick_sort(std::list<T> v)
 {
-    if(v.empty()) return v;
+    if (v.empty()) return v;
     std::list<T> res;
     res.splice(res.begin(), v, v.begin());
     const T& firstVal = *res.begin();

@@ -45,7 +45,7 @@ public:
     bool try_pop(T& x)
     {
         std::lock_guard<std::mutex> l(m);
-        if(q.empty()) return false;
+        if (q.empty()) return false;
         x = std::move(*q.front());
         q.pop();
         return true;
@@ -54,7 +54,7 @@ public:
     std::shared_ptr<T> try_pop()
     {
         std::lock_guard<std::mutex> l(m);
-        if(q.empty()) return std::shared_ptr<T>();
+        if (q.empty()) return std::shared_ptr<T>();
         std::shared_ptr<T> res = q.front();
         q.pop();
         return res;

@@ -9,10 +9,16 @@ public:
     thread_guard(std::thread&& t, DtorAction a) : action(a), t(std::move(t)) {}
     ~thread_guard()
     {
-        if(t.joinable())
+        if (t.joinable())
         {
-            if(action == DtorAction::join) t.join();
-            else t.detach();
+            if (action == DtorAction::join)
+            {
+                t.join();
+            }
+            else
+            {
+                t.detach();
+            }
         }
     }
     thread_guard(thread_guard&&) = default;

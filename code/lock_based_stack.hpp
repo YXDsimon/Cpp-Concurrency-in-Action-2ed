@@ -36,7 +36,7 @@ public:
     std::shared_ptr<T> pop() // 返回一个指向栈顶元素的指针
     {
         std::lock_guard<std::mutex> l(m);
-        if(s.empty()) throw emptyStack();
+        if (s.empty()) throw emptyStack();
         const std::shared_ptr<T> res(std::make_shared<T>(std::move(s.top())));
         s.pop();
         return res;
@@ -45,7 +45,7 @@ public:
     void pop(T& n) // 传引用获取结果
     {
         std::lock_guard<std::mutex> l(m);
-        if(s.empty()) throw emptyStack();
+        if (s.empty()) throw emptyStack();
         n = std::move(s.top());
         s.pop();
     }

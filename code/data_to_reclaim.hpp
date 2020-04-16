@@ -26,7 +26,7 @@ std::atomic<DataToReclaim*> toDel; // 待删除节点的列表的头节点
 void addToDel(DataToReclaim* n)
 {
     n->next = toDel.load();
-    while(!toDel.compare_exchange_weak(n->next, n));
+    while (!toDel.compare_exchange_weak(n->next, n));
 }
 
 template<typename T> // 这里用模板来实现
@@ -38,11 +38,17 @@ void reclaim_later(T* data) // 因为DataToReclaim的构造函数是模板
 void delete_nodes_with_no_hazards() // 释放待删除节点列表中可删除的节点
 {
     DataToReclaim* cur = toDel.exchange(nullptr);
-    while(cur)
+    while (cur)
     {
         DataToReclaim* const tmp = cur->next;
-        if(!outstanding_hazard_pointers_for(cur->data)) delete cur;
-        else addToDel(cur);
+        if (!outstanding_hazard_pointers_for(cur->data))
+        {
+            delete cur;
+        }
+        else
+        {
+            addToDel(cur);
+        }
         cur = tmp;
     }
 }

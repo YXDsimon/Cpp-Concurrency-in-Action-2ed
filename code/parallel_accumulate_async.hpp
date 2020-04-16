@@ -7,7 +7,10 @@ T parallel_accumulate(Iterator first, Iterator last, T init)
 {
     const unsigned long len = std::distance(first, last);
     const unsigned long max_chunk_size = 25;
-    if(len <= max_chunk_size) return std::accumulate(first, last, init);
+    if (len <= max_chunk_size)
+    {
+        return std::accumulate(first, last, init);
+    }
     else
     {
         Iterator mid_point = first;

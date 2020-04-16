@@ -16,9 +16,9 @@ Iterator parallel_find(Iterator first, Iterator last, T match)
         {
             try
             {
-                for(; begin != end && !done_flag->load(); ++begin)
+                for (; begin != end && !done_flag->load(); ++begin)
                 {
-                    if(*begin == match)
+                    if (*begin == match)
                     {
                         res->set_value(begin);
                         done_flag->store(true);
@@ -38,7 +38,7 @@ Iterator parallel_find(Iterator first, Iterator last, T match)
         }
     };
     const unsigned long len = std::distance(first, last);
-    if(!len) return last;
+    if (!len) return last;
     const unsigned long min_per_thread = 25;
     const unsigned long max_threads = (len + min_per_thread - 1) / min_per_thread;
     const unsigned long hardware_threads = std::thread::hardware_concurrency();
@@ -51,7 +51,7 @@ Iterator parallel_find(Iterator first, Iterator last, T match)
     {
         threads_guard g(threads);
         Iterator block_start = first;
-        for(unsigned long i = 0; i < num_threads - 1; ++i)
+        for (unsigned long i = 0; i < num_threads - 1; ++i)
         {
             Iterator block_end = block_start;
             std::advance(block_end, block_size);
@@ -60,6 +60,6 @@ Iterator parallel_find(Iterator first, Iterator last, T match)
         }
         find_element()(block_start, last, match, &res, &done_flag);
     }
-    if(!done_flag.load()) return last;
+    if (!done_flag.load()) return last;
     return res.get_future().get();
 }

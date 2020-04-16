@@ -27,18 +27,18 @@ struct sorter
     ~sorter()
     {
         end_of_data = true;
-        for(unsigned i = 0; i < threads.size(); ++i) threads[i].join();
+        for (unsigned i = 0; i < threads.size(); ++i) threads[i].join();
     }
 
     void try_sort_chunk()
     {
         std::shared_ptr<chunk_to_sort> chunk = chunks.pop();
-        if(chunk) sort_chunk(chunk);
+        if (chunk) sort_chunk(chunk);
     }
 
     std::list<T> do_sort(std::list<T>& v)
     {
-        if(v.empty()) return v;
+        if (v.empty()) return v;
         std::list<T> res;
         res.splice(res.begin(), v, v.begin());
         const T& firstVal = *res.begin();
@@ -47,13 +47,13 @@ struct sorter
         low.data.splice(low.data.end(), v, v.begin(), it);
         std::future<std::list<T>> l = low.promise.get_future();
         chunks.push(std::move(low));
-        if(threads.size() < max_thread_count)
+        if (threads.size() < max_thread_count)
         {
             threads.emplace_back(&sorter<T>::sort_thread, this);
         }
         auto r(do_sort(v));
         res.splice(res.end(), r);
-        while(l.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+        while (l.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
         {
             try_sort_chunk();
         }
@@ -68,7 +68,7 @@ struct sorter
 
     void sort_thread()
     {
-        while(!end_of_data)
+        while (!end_of_data)
         {
             try_sort_chunk();
             std::this_thread::yield();
@@ -79,7 +79,7 @@ struct sorter
 template<typename T>
 std::list<T> parallel_quick_sort(std::list<T> v)
 {
-    if(v.empty()) return v;
+    if (v.empty()) return v;
     sorter<T> s;
     return s.do_sort(v);
 }

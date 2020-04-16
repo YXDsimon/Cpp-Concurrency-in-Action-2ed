@@ -3,7 +3,7 @@ class spinlock_mutex {
 public:
     void lock()
     {
-        while(flag.test_and_set(std::memory_order_acquire));
+        while (flag.test_and_set(std::memory_order_acquire));
     }
     void unlock()
     {
@@ -15,7 +15,7 @@ spinlock_mutex m;
 
 void f(int n)
 {
-    for(int i = 0; i < 100; ++i)
+    for (int i = 0; i < 100; ++i)
     {
         m.lock();
         std::cout << "Output from thread " << n << '\n';
@@ -26,6 +26,6 @@ void f(int n)
 int main()
 {
     std::vector<std::thread> v;
-    for(int i = 0; i < 10; ++i) v.emplace_back(f, i);
-    for(auto& x : v) x.join();
+    for (int i = 0; i < 10; ++i) v.emplace_back(f, i);
+    for (auto& x : v) x.join();
 }

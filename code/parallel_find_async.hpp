@@ -10,11 +10,11 @@ Iterator parallel_find_impl(Iterator first, Iterator last, T match, std::atomic<
     {
         const unsigned long len = std::distance(first, last);
         const unsigned long min_per_thread = 25;
-        if(len < (2 * min_per_thread))
+        if (len < (2 * min_per_thread))
         {
-            for(; first != last && !done_flag.load(); ++first)
+            for (; first != last && !done_flag.load(); ++first)
             {
-                if(*first == match)
+                if (*first == match)
                 {
                     done_flag = true;
                     return first;

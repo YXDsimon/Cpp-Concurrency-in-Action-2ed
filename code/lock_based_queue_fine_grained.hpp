@@ -51,14 +51,14 @@ class thread_safe_queue {
     std::unique_ptr<node> try_pop_head()
     {
         std::lock_guard<std::mutex> l(hm);
-        if(head.get() == get_tail()) return std::unique_ptr<node>();
+        if (head.get() == get_tail()) return std::unique_ptr<node>();
         return pop_head();
     }
     
     std::unique_ptr<node> try_pop_head(T& x)
     {
         std::lock_guard<std::mutex> l(hm);
-        if(head.get() == get_tail()) return std::unique_ptr<node>();
+        if (head.get() == get_tail()) return std::unique_ptr<node>();
         x = std::move(*head->val);
         return pop_head();
     }

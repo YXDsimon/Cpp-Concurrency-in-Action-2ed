@@ -8,7 +8,7 @@ class hierarchical_mutex {
     static thread_local unsigned long this_thread_hierarchy_value;
     void check_for_hierarchy_violation() // 检查是否违反层级结构
     {
-        if(this_thread_hierarchy_value <= hierarchy_value)
+        if (this_thread_hierarchy_value <= hierarchy_value)
         {
             throw std::logic_error("mutex hierarchy violated");
         }
@@ -32,7 +32,7 @@ public:
     }
     void unlock()
     {
-        if(this_thread_hierarchy_value != hierarchy_value)
+        if (this_thread_hierarchy_value != hierarchy_value)
         {
             throw std::logic_error("mutex hierarchy violated");
         }
@@ -43,7 +43,7 @@ public:
     bool try_lock()
     {
         check_for_hierarchy_violation();
-        if(!internal_mutex.try_lock()) return false;
+        if (!internal_mutex.try_lock()) return false;
         update_hierarchy_value();
         return true;
     }
