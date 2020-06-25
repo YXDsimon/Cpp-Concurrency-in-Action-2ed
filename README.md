@@ -2,7 +2,7 @@ C++11 引入了 Boost 线程库作为标准线程库，作者 Anthony Williams �
 
 ## 相关链接
 * GitHub Pages：[https://downdemo.github.io/Cpp-Concurrency-in-Action-2ed/](https://downdemo.github.io/Cpp-Concurrency-in-Action-2ed/)
-* GitBook在线阅读：[https://downdemo.gitbook.io/cpp-concurrency-in-action-2ed/](https://downdemo.gitbook.io/cpp-concurrency-in-action-2ed/)
+* GitBook 在线阅读：[https://downdemo.gitbook.io/cpp-concurrency-in-action-2ed/](https://downdemo.gitbook.io/cpp-concurrency-in-action-2ed/)
 * 本书大多未详细解释的基础知识可参考[《现代操作系统》](https://book.douban.com/subject/27096665/)：[进程与线程](https://github.com/downdemo/Cpp-Concurrency-in-Action-2ed/blob/master/reference/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B.md)、[内存管理](https://github.com/downdemo/Cpp-Concurrency-in-Action-2ed/blob/master/reference/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.md)、[文件系统](https://github.com/downdemo/Cpp-Concurrency-in-Action-2ed/blob/master/reference/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.md)、[I/O](https://github.com/downdemo/Cpp-Concurrency-in-Action-2ed/blob/master/reference/IO.md)、[死锁](https://github.com/downdemo/Cpp-Concurrency-in-Action-2ed/blob/master/reference/%E6%AD%BB%E9%94%81.md)
 
 ## [C++11线程库API](https://en.cppreference.com/w/cpp/thread)
